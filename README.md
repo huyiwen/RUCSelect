@@ -1,8 +1,10 @@
 # RUC Select
 
+如果你喜欢本项目，请点个Star~
+
 ## Installation
 
-需要自行安装依赖`pyppeteer`和`ddddocr`，第一次运行时还会安装一个Chrome，但Chrome的依赖项在某些系统下不会自动安装
+需要自行安装依赖`pyppeteer`和`ddddocr`，第一次运行时还会安装一个Chrome，但Chrome的依赖项在某些系统下不会自动安装，需要手动安装一下
 
 ## Usage
 
@@ -18,5 +20,7 @@ python3 ruc_select.py 学号 一级菜单编号 [二级菜单编号] [学院] --
 <img width="1040" alt="image" src="https://github.com/huyiwen/RUCSelect/assets/5737212/251c3250-2eb4-441c-b6fb-6e09f35cbc9e">
 
 ## Buy me a coffee
+
+如果你喜欢本项目，考虑给我买杯咖啡~
 
 <img width="300" alt="image" src=https://github.com/huyiwen/RUCSelect/assets/5737212/cc48ba3d-a386-45a8-8c5a-9aae96a9b198>
