@@ -63,12 +63,73 @@ async def login(page: Page, username: str, password: str) -> bool:
         return True
 
 
-schools = {
-    "经济学院": "#oneTable > div.oneCont > div:nth-child(1) > div > div.el-col.el-col-5 > div:nth-child(2) > div > div:nth-child(7) > ul > li:nth-child(1) > ul > li:nth-child(5)",
-    "财政金融学院": "#oneTable > div.oneCont > div:nth-child(1) > div > div.el-col.el-col-5 > div:nth-child(2) > div > div:nth-child(7) > ul > li:nth-child(1) > ul > li:nth-child(4)",
-    "应用经济学院": "#oneTable > div.oneCont > div:nth-child(1) > div > div.el-col.el-col-5 > div:nth-child(2) > div > div:nth-child(7) > ul > li:nth-child(1) > ul > li:nth-child(11)",
-    "农村与农业发展学院": "#oneTable > div.oneCont > div:nth-child(1) > div > div.el-col.el-col-5 > div:nth-child(2) > div > div:nth-child(7) > ul > li:nth-child(1) > ul > li:nth-child(15)",
-}
+template = "#oneTable > div.oneCont > div:nth-child(1) > div > div.el-col.el-col-5 > div:nth-child(2) > div > div:nth-child(7) > ul > li:nth-child(1) > ul > li:nth-child({idx})"
+schools = [
+    [
+        "数学学院",
+        "外国语学院",
+        "商学院",
+        "财政金融学院",
+        "经济学院",
+        "统计学院",
+        "新闻学院",
+        "社会与人口学院",
+        "公共管理学院",
+        "高瓴人工智能学院",
+        "应用经济学院",
+        "马克思主义学院",
+        "信息资源管理学院",
+        "心理学系",
+        "农业与农村发展学院",
+        "理学院-化学系",
+        "理学院-物理学系",
+        "国际关系学院",
+        "环境学院",
+        "文学院",
+        "法学院",
+        "明德书院",
+        "哲学院",
+        "劳动人事学院",
+        "国学院",
+        "历史学院",
+        "信息学院",
+        "中共党史党建学院",
+        "国际文化交流学院",
+        "理学院",
+    ],
+    [
+        "宏观经济",
+        "外国文化",
+        "教育与社会",
+        "教育的经济分析",
+        "宗教学",
+        "管理学",
+        "教育管理",
+        "文化与思潮",
+        "大数据及其交叉学科",
+        "心理学基础理论",
+        "中国史",
+        "应用法学",
+        "国际经贸",
+        "环境污染治理",
+    ],
+    [
+        "认知科学与哲学",
+        "调查与商业分析",
+        "数字人文",
+        "可持续发展",
+        "定量数据分析方法及其应用",
+        "全球治理与国际组织人才培养",
+        "空间云数据竞争力分析师",
+        "马克思主义理论",
+        "全球化与伦理学",
+        "房地产经济与管理",
+        "数据法学",
+        "健康政策与治理创新",
+        "认知科学与哲学",
+        "区块链与数字经济",
+    ]
+]
 
 
 async def navigate(page: Page, first: int, second: Optional[int] = None, school: Optional[str] = None):
@@ -112,7 +173,9 @@ async def navigate(page: Page, first: int, second: Optional[int] = None, school:
 
     if school is not None:
         await asyncio.sleep(1)
-        await page.click(schools[school])
+        assert second is not None
+        idx = schools[second-1].index(school)
+        await page.click(template.format(idx=idx + 1))
         print("Click " + school)
 
 
@@ -180,7 +243,10 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             exit(0)
         except Exception as e:
+            if isinstance(e, RuntimeError) and "This event loop is already running" in str(e):
+                exit(0)
             print("尝试重启中...")
+            print(e)
             time.sleep(5)
             bark("报错", str(e))
 
